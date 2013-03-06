@@ -4,7 +4,7 @@ SQLObject 0.11
 
 from main import *
 from col import *
-from sqlbuilder import AND, OR, NOT, IN, LIKE, RLIKE, DESC, CONTAINSSTRING, const, func
+from sqlbuilder import AND, OR, NOT, IN, LIKE, RLIKE, DESC, CONTAINSSTRING, const, func, OVERLAPS
 from styles import *
 from joins import *
 from index import *

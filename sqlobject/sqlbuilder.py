@@ -867,6 +867,9 @@ def ISNULL(expr):
 def ISNOTNULL(expr):
     return SQLOp("IS NOT", expr, None)
 
+def OVERLAPS(timetuple1, timetuple2):
+    return SQLOp("OVERLAPS", timetuple1, timetuple2)
+
 class ColumnAS(SQLOp):
     ''' Just like SQLOp('AS', expr, name) except without the parentheses '''
     def __init__(self, expr, name):
