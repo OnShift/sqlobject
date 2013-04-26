@@ -348,10 +348,10 @@ class DBAPI(DBConnection):
     def query(self, s):
         return self._runWithConnection(self._query, s)
 
-    def _queryAll(self, conn, s, cursor_factory=None):
+    def _queryAll(self, conn, s):
         if self.debug:
             self.printDebug(conn, s, 'QueryAll')
-        c = conn.cursor(cursor_factory=cursor_factory)
+        c = conn.cursor()
         self._executeRetry(conn, c, s)
         value = c.fetchall()
         if self.debugOutput:
