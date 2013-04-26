@@ -380,7 +380,7 @@ def _removeReceiver(receiver):
 	for senderkey in sendersBack.get(backKey,()):
 		try:
 			signals = connections[senderkey].keys()
-		except KeyError as err:
+		except KeyError,err:
 			pass
 		else:
 			for signal in signals:
@@ -391,7 +391,7 @@ def _removeReceiver(receiver):
 				else:
 					try:
 						receivers.remove( receiver )
-					except Exception as err:
+					except Exception, err:
 						pass
 				_cleanupConnections(senderkey, signal)
 	try:

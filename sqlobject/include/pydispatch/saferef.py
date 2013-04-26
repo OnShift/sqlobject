@@ -109,10 +109,10 @@ class BoundMethodWeakref(object):
 				try:
 					if callable( function ):
 						function( self )
-				except Exception as e:
+				except Exception, e:
 					try:
 						traceback.print_exc()
-					except AttributeError as err:
+					except AttributeError, err:
 						print '''Exception during saferef %s cleanup function %s: %s'''%(
 							self, function, e
 						)

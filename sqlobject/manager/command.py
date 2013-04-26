@@ -248,7 +248,7 @@ class Command(object):
                 sorter.append((level, cls))
             sorter.sort()
             ordered_classes = [cls for level, cls in sorter]
-        except SQLObjectCircularReferenceError as msg:
+        except SQLObjectCircularReferenceError, msg:
             # Failsafe: return the classes as-is if a circular reference
             # prevented the dependency levels to be calculated.
             print ("Warning: a circular reference was detected in the "
@@ -462,11 +462,11 @@ class Command(object):
                 module_name = module_name.replace(os.path.sep,'.')[:-3]
                 try:
                     module = moduleloader.load_module(module_name)
-                except ImportError as err:
+                except ImportError, err:
                     if self.options.verbose:
                         print 'Could not import module "%s". Error was : "%s"' % (module_name, err)
                     continue
-                except Exception as exc:
+                except Exception, exc:
                     if self.options.verbose:
                         print 'Unknown exception while processing module "%s" : "%s"' % (module_name, exc)
                     continue
@@ -633,7 +633,7 @@ class CommandCreate(Command):
                 if not self.options.simulate:
                     try:
                         soClass._connection.createEmptyDatabase()
-                    except soClass._connection.module.ProgrammingError as e:
+                    except soClass._connection.module.ProgrammingError, e:
                         if str(e).find('already exists') != -1:
                             print 'Database already exists'
                         else:
@@ -756,7 +756,7 @@ class CommandStatus(Command):
                     columnsFromSchema_warning = True
                 good += 1
                 continue
-            except AssertionError as e:
+            except AssertionError, e:
                 print 'Cannot read db table %s: %s' % (
                     soClass.sqlmeta.table, e)
                 continue
@@ -846,7 +846,7 @@ class CommandExecute(Command):
             print sql
         try:
             self.cursor.execute(sql)
-        except Exception as e:
+        except Exception, e:
             if not self.options.verbose:
                 print sql
             print "****Error:"

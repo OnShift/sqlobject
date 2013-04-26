@@ -108,7 +108,7 @@ class PostgresConnection(DBAPI):
                 conn = self.module.connect(self.dsn)
             else:
                 conn = self.module.connect(**self.dsn_dict)
-        except self.module.OperationalError as e:
+        except self.module.OperationalError, e:
             raise self.module.OperationalError("%s; used connection string %r" % (e, self.dsn))
         if self.autoCommit:
             # psycopg2 does not have an autocommit method.

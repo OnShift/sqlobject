@@ -105,7 +105,7 @@ def getConnectionURI():
 
 try:
     connection = getConnection()
-except Exception as e:
+except Exception, e:
     # At least this module should be importable...
     print >> sys.stderr, (
         "Could not open database: %s" % e)

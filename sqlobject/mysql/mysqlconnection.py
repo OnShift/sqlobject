@@ -77,7 +77,7 @@ class MySQLConnection(DBAPI):
                 db=self.db, user=self.user, passwd=self.password, **self.kw)
             if MySQLdb.version_info[:3] >= (1, 2, 2):
                 conn.ping(True) # Attempt to reconnect. This setting is persistent.
-        except self.module.OperationalError as e:
+        except self.module.OperationalError, e:
             conninfo = "; used connection string: host=%(host)s, port=%(port)s, db=%(db)s, user=%(user)s" % self.__dict__
             raise OperationalError(ErrorMessage(e, conninfo))
 
@@ -119,7 +119,7 @@ class MySQLConnection(DBAPI):
         for count in range(3):
             try:
                 return cursor.execute(query)
-            except MySQLdb.OperationalError as e:
+            except MySQLdb.OperationalError, e:
                 if e.args[0] in (MySQLdb.constants.CR.SERVER_GONE_ERROR, MySQLdb.constants.CR.SERVER_LOST):
                     if count == 2:
                         raise OperationalError(ErrorMessage(e))
@@ -127,27 +127,27 @@ class MySQLConnection(DBAPI):
                         self.printDebug(conn, str(e), 'ERROR')
                 else:
                     raise OperationalError(ErrorMessage(e))
-            except MySQLdb.IntegrityError as e:
+            except MySQLdb.IntegrityError, e:
                 msg = ErrorMessage(e)
                 if e.args[0] == MySQLdb.constants.ER.DUP_ENTRY:
                     raise DuplicateEntryError(msg)
                 else:
                     raise IntegrityError(msg)
-            except MySQLdb.InternalError as e:
+            except MySQLdb.InternalError, e:
                 raise InternalError(ErrorMessage(e))
-            except MySQLdb.ProgrammingError as e:
+            except MySQLdb.ProgrammingError, e:
                 raise ProgrammingError(ErrorMessage(e))
-            except MySQLdb.DataError as e:
+            except MySQLdb.DataError, e:
                 raise DataError(ErrorMessage(e))
-            except MySQLdb.NotSupportedError as e:
+            except MySQLdb.NotSupportedError, e:
                 raise NotSupportedError(ErrorMessage(e))
-            except MySQLdb.DatabaseError as e:
+            except MySQLdb.DatabaseError, e:
                 raise DatabaseError(ErrorMessage(e))
-            except MySQLdb.InterfaceError as e:
+            except MySQLdb.InterfaceError, e:
                 raise InterfaceError(ErrorMessage(e))
-            except MySQLdb.Warning as e:
+            except MySQLdb.Warning, e:
                 raise Warning(ErrorMessage(e))
-            except MySQLdb.Error as e:
+            except MySQLdb.Error, e:
                 raise Error(ErrorMessage(e))
 
     def _queryInsertID(self, conn, soInstance, id, names, values):
@@ -202,7 +202,7 @@ class MySQLConnection(DBAPI):
             # which is not always True (for an embedded application, e.g.)
             self.query('DESCRIBE %s' % (tableName))
             return True
-        except ProgrammingError as e:
+        except ProgrammingError, e:
             if e[0].code == 1146: # ER_NO_SUCH_TABLE
                 return False
             raise

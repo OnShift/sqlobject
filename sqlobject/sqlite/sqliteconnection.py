@@ -179,29 +179,29 @@ class SQLiteConnection(DBAPI):
             self.printDebug(conn, query, 'QueryR')
         try:
             return cursor.execute(query)
-        except self.module.OperationalError as e:
+        except self.module.OperationalError, e:
             raise OperationalError(ErrorMessage(e))
-        except self.module.IntegrityError as e:
+        except self.module.IntegrityError, e:
             msg = ErrorMessage(e)
             if msg.startswith('column') and msg.endswith('not unique'):
                 raise DuplicateEntryError(msg)
             else:
                 raise IntegrityError(msg)
-        except self.module.InternalError as e:
+        except self.module.InternalError, e:
             raise InternalError(ErrorMessage(e))
-        except self.module.ProgrammingError as e:
+        except self.module.ProgrammingError, e:
             raise ProgrammingError(ErrorMessage(e))
-        except self.module.DataError as e:
+        except self.module.DataError, e:
             raise DataError(ErrorMessage(e))
-        except self.module.NotSupportedError as e:
+        except self.module.NotSupportedError, e:
             raise NotSupportedError(ErrorMessage(e))
-        except self.module.DatabaseError as e:
+        except self.module.DatabaseError, e:
             raise DatabaseError(ErrorMessage(e))
-        except self.module.InterfaceError as e:
+        except self.module.InterfaceError, e:
             raise InterfaceError(ErrorMessage(e))
-        except self.module.Warning as e:
+        except self.module.Warning, e:
             raise Warning(ErrorMessage(e))
-        except self.module.Error as e:
+        except self.module.Error, e:
             raise Error(ErrorMessage(e))
 
     def _queryInsertID(self, conn, soInstance, id, names, values):
