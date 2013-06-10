@@ -100,7 +100,7 @@ class PostgresConnection(DBAPI):
     def _setAutoCommit(self, conn, auto):
         # psycopg2 does not have an autocommit method.
         if hasattr(conn, 'autocommit'):
-            conn.autocommit(auto)
+            conn.autocommit = auto
 
     def makeConnection(self):
         try:
@@ -113,7 +113,7 @@ class PostgresConnection(DBAPI):
         if self.autoCommit:
             # psycopg2 does not have an autocommit method.
             if hasattr(conn, 'autocommit'):
-                conn.autocommit(1)
+                conn.autocommit = True
         if self.schema:
             c = conn.cursor()
             c.execute("SET search_path TO " + self.schema)
